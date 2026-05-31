@@ -110,6 +110,19 @@ PROVIDERS: tuple[ProviderSpec, ...] = (
         backend="azure_openai",
         is_direct=True,
     ),
+    # === Google Vertex AI (native Gemini API via google-genai) =============
+    ProviderSpec(
+        name="vertex_ai",
+        keywords=(
+            "vertex",
+            "vertex_ai",
+            "vertex-ai",
+        ),
+        env_key="",
+        display_name="Vertex AI",
+        backend="vertex_ai",
+        is_direct=True,
+    ),
     # === AWS Bedrock (native Converse API via bedrock-runtime) =============
     ProviderSpec(
         name="bedrock",

@@ -183,12 +183,21 @@ class BedrockProviderConfig(ProviderConfig):
     profile: str | None = None  # Optional AWS shared config profile
 
 
+class VertexAIProviderConfig(ProviderConfig):
+    """Google Cloud Vertex AI provider configuration."""
+
+    project_id: str | None = None  # Google Cloud Project ID
+    location: str | None = None  # Google Cloud Location (e.g. us-central1)
+    credentials_json: str | None = None  # Service account credentials JSON string
+
+
 class ProvidersConfig(Base):
     """Configuration for LLM providers."""
 
     custom: ProviderConfig = Field(default_factory=ProviderConfig)  # Any OpenAI-compatible endpoint
     azure_openai: ProviderConfig = Field(default_factory=ProviderConfig)  # Azure OpenAI (model = deployment name)
     bedrock: BedrockProviderConfig = Field(default_factory=BedrockProviderConfig)  # AWS Bedrock Converse
+    vertex_ai: VertexAIProviderConfig = Field(default_factory=VertexAIProviderConfig)  # Google Cloud Vertex AI
     anthropic: ProviderConfig = Field(default_factory=ProviderConfig)
     openai: ProviderConfig = Field(default_factory=ProviderConfig)
     openrouter: ProviderConfig = Field(default_factory=ProviderConfig)

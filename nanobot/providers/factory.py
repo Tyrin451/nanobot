@@ -88,6 +88,15 @@ def _make_provider_core(
             profile=getattr(p, "profile", None) if p else None,
             extra_body=p.extra_body if p else None,
         )
+    elif backend == "vertex_ai":
+        from nanobot.providers.vertex_ai_provider import VertexAIProvider
+
+        provider = VertexAIProvider(
+            project_id=getattr(p, "project_id", None) if p else None,
+            location=getattr(p, "location", None) if p else None,
+            credentials_json=getattr(p, "credentials_json", None) if p else None,
+            default_model=model,
+        )
     else:
         from nanobot.providers.openai_compat_provider import OpenAICompatProvider
 
@@ -187,6 +196,9 @@ def provider_signature(
             fp.api_type if fp else "auto",
             getattr(fp, "region", None) if fp else None,
             getattr(fp, "profile", None) if fp else None,
+            getattr(fp, "project_id", None) if fp else None,
+            getattr(fp, "location", None) if fp else None,
+            getattr(fp, "credentials_json", None) if fp else None,
             fallback.max_tokens,
             fallback.temperature,
             fallback.reasoning_effort,
@@ -204,6 +216,9 @@ def provider_signature(
         p.api_type if p else "auto",
         getattr(p, "region", None) if p else None,
         getattr(p, "profile", None) if p else None,
+        getattr(p, "project_id", None) if p else None,
+        getattr(p, "location", None) if p else None,
+        getattr(p, "credentials_json", None) if p else None,
         resolved.max_tokens,
         resolved.temperature,
         resolved.reasoning_effort,

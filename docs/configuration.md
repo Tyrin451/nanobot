@@ -142,6 +142,7 @@ ANTHROPIC_API_KEY="$(bw get password api/anthropic)" nanobot agent
 | `anthropic` | LLM (Claude direct) | [console.anthropic.com](https://console.anthropic.com) |
 | `azure_openai` | LLM (Azure OpenAI) | [portal.azure.com](https://portal.azure.com) |
 | `bedrock` | LLM (AWS Bedrock Converse, Claude/Nova/Llama/etc.) | [aws.amazon.com/bedrock](https://aws.amazon.com/bedrock/) |
+| `vertex_ai` | LLM (Google Cloud Vertex AI) | [cloud.google.com/vertex-ai](https://cloud.google.com/vertex-ai) |
 | `openai` | LLM + Voice transcription (Whisper) | [platform.openai.com](https://platform.openai.com) |
 | `deepseek` | LLM (DeepSeek direct) | [platform.deepseek.com](https://platform.deepseek.com) |
 | `groq` | LLM + Voice transcription (Whisper, default) | [console.groq.com](https://console.groq.com) |
@@ -232,6 +233,62 @@ once, then use Skywork model IDs such as `skywork-ai/skyclaw-v1`.
 
 You can also reference `${APIFREE_API_KEY}` in `apiKey` if that is how your
 environment names the credential.
+
+</details>
+
+<details>
+<summary><b>Google Cloud Vertex AI (Gemini API)</b></summary>
+
+Vertex AI uses the official `google-genai` SDK to securely access Gemini models via your Google Cloud project.
+
+**1. Install dependencies**
+
+Install the `google-genai` library (it is not installed by default):
+
+```bash
+pip install google-genai
+```
+
+**2. Minimal config**
+
+In `~/.nanobot/config.json`:
+
+```json
+{
+  "providers": {
+    "vertex_ai": {
+      "projectId": "my-google-cloud-project",
+      "location": "us-central1"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "provider": "vertex_ai",
+      "model": "vertex_ai/gemini-1.5-pro-preview-0409"
+    }
+  }
+}
+```
+
+Authentication is handled via [Application Default Credentials (ADC)](https://cloud.google.com/docs/authentication/provide-credentials-adc). You can set it up via the `gcloud` CLI:
+
+```bash
+gcloud auth application-default login
+```
+
+Alternatively, you can provide the credentials explicitly via a JSON string or supply an API key if you're not using ADC:
+
+```json
+{
+  "providers": {
+    "vertex_ai": {
+      "projectId": "my-google-cloud-project",
+      "location": "us-central1",
+      "credentialsJson": "{\"type\": \"service_account\", ... }"
+    }
+  }
+}
+```
 
 </details>
 
